@@ -19,9 +19,9 @@ expressOasGenerator.handleResponses(app,{
 app.use(express.json())
 
 // Define routes
-app.get('/', (req,res)=>{
-    res.json('Welcome to the home page');
-});
+// app.get('/', (req,res)=>{
+//     res.json('Welcome to the home page');
+// });
 
 app.post('/login',(req,res)=>{
     res.json('Your login was successful')
@@ -46,7 +46,7 @@ app.use((req, res) => res.redirect('/api-docs'));
 // Listen for incoming requests
 const port = process.env.PORT || 3000;
 app.listen(port, () =>{
-    console.log('App listening on port 3000');
+    console.log(`App listening on port ${port}`);
 })
 
 // Password for user: eGmmtWpo3ML5XU3a
