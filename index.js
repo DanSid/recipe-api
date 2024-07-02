@@ -11,30 +11,14 @@ await mongoose.connect(process.env.MONGO_URL)
 const app = express();
 
 expressOasGenerator.handleResponses(app,{
+    alwaysServeDocs: true,
     tags: ['categories', 'recipes'],
     mongooseModels:mongoose.modelNames(),
 });
 
 // Apply Middlewares
 app.use(express.json())
-
-// Define routes
-// app.get('/', (req,res)=>{
-//     res.json('Welcome to the home page');
-// });
-
-app.post('/login',(req,res)=>{
-    res.json('Your login was successful')
-});
-
-app.patch('/aboutus',(req,res)=>{
-    res.json('Your document is successfully Updated')
-})
-
-app.delete('/contactus', (req,res)=>{
-    res.json('Your page is deleted')
-})
-
+app.use(express.static('uploads'))
 
 // Use routes from different places
 app.use(recipiesRouter);
