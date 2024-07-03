@@ -4,19 +4,19 @@ import { RecipeModel } from "../models/recipe.js";
 export const getRecipies = async (req, res, next) => {
     try {
         // Get query params
-        const {limit, skip, search} = req.query;
-
-        // Getting all recipies from database
-        const allRecipies = await RecipeModel
-        .find({name:search})
-        .limit(limit)
-        .skip(skip);
-        // Returning all recipies as response
-        res.json(allRecipies)
+        const { limit, skip, filter } = req.query;
+        // Get all recipes from database
+        const allRecipes = await RecipeModel
+            .find(filter)
+            .limit(limit)
+            .skip(skip);
+        // Return all recipes as response
+        res.json(allRecipes);
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
+
 
 // Post Recipe
 export const postRecipe = async (req, res, next) => {

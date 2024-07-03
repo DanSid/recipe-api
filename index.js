@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import expressOasGenerator from "express-oas-generator"
 import recipiesRouter from "./routes/recipies.js";
@@ -18,7 +19,9 @@ expressOasGenerator.handleResponses(app,{
 
 // Apply Middlewares
 app.use(express.json())
+app.use(cors())
 app.use(express.static('uploads'))
+
 
 // Use routes from different places
 app.use(recipiesRouter);

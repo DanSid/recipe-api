@@ -1,20 +1,24 @@
 import { CategoryModel } from "../models/category.js";
 
-export const getCategories = async (req, res, next) =>{
+export const getCategories = async (req, res, next) => {
     try {
+        // Get query params
+        const { limit, skip, filter, fields } = req.query;
         // Get all categories from database
-        const allCategories = await CategoryModel.find();
+        const allCategories = await CategoryModel
+            .find(fields ? JSON.parse(filter) : {})
+            .select(fields ?JSON.parse(fields) : '')
+            .limit(limit ? parseInt(limit): undefined)
+            .skip(skip ? parseInt(skip): undefined);
         // Return response
-        res.json(allCategories)
+        res.status(200).json(allCategories);
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
 
 export const postCategory = async (req, res, next) =>{
     try {
-        console.log(req.body);
-        console.log(req.file);
         // Add category from database
         const newCategory = await CategoryModel.create({
             // spreadit
