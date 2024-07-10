@@ -1,21 +1,44 @@
 
 import { RecipeModel } from "../models/recipe.js";
 
+// Filtering all items in the fields
 export const getRecipies = async (req, res, next) => {
     try {
         // Get query params
-        const { limit, skip, filter } = req.query;
-        // Get all recipes from database
+        const { filter = "{}", sort ="{}", fields = "{}", limit = 10, skip  = 0} = req.query;
+        // Get all categories from database
         const allRecipes = await RecipeModel
-            .find(filter)
+            .find(JSON.parse(filter) )
+            .sort(JSON.parse(sort))
+            .select(JSON.parse(fields))
             .limit(limit)
             .skip(skip);
-        // Return all recipes as response
-        res.json(allRecipes);
+        // Return response
+        res.status(200).json(allRecipes);
     } catch (error) {
         next(error);
     }
 }
+
+// export const getRecipies = async (req, res, next) => {
+//     try {
+//         // Get query params
+//         const { limit, skip, filter } = req.query;
+//         // Get all recipes from database
+//         const allRecipes = await RecipeModel
+//             .find(filter)
+//             .limit(limit)
+//             .skip(skip);
+//         // Return all recipes as response
+//         res.json(allRecipes);
+//     } catch (error) {
+//         next(error);
+//     }
+// }
+
+
+
+
 
 
 // Post Recipe
